@@ -1,6 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
-
+// One of the ways is to use cpp_int to handle arbitrarily large ints
+// If it doesn't work by multiplying, try dividing to get smaller numbers preventing overflows 
+#include <boost/multiprecision/cpp_int.hpp>
+using namespace boost::multiprecision;
 #define ll long long
 const int MOD = 1e9 + 7;
 // Miller–Rabin bases for n < 2^64
@@ -74,7 +77,7 @@ bool isPrime(ll n) {
 bool isPowerOfTwo(int n) {
     return n > 0 && (n & (n - 1)) == 0;
 }
-bool check(ll prod, ll k){
+bool check(cpp_int prod, ll k){
     ll cnt = 0;
     while (prod != 0){
         prod = prod/10;
@@ -86,7 +89,7 @@ bool check(ll prod, ll k){
 void ak(){
     ll n,k;
     cin >> n >> k;
-    ll prod = 1;
+    cpp_int prod = 1;
     for (ll i = 0; i < n; i++){
         ll num;
         cin >> num;
@@ -97,10 +100,31 @@ void ak(){
     }
     cout << prod << "\n";
 }
+void ak1(){
+    ll n,k;
+    cin >> n >> k;
+    ll prod = 1;
+    ll  maxi = 1; // k digits ka max number form karo
+    for (int i = 0; i < k; i++){
+        maxi = maxi*10;
+    }
+    maxi--;
+    for (int i = 0; i < n; i++){
+        ll a;
+        cin >> a;
+        if (prod > (maxi/a)){
+            prod = 1;
+        }
+        else {
+            prod *= a;
+        }
+    }
+    cout << prod << "\n";
+}
 int32_t main(){
     int t = 1;
     //cin >> t;
     while(t--){
-        ak();
+        ak1();
     }
 }
