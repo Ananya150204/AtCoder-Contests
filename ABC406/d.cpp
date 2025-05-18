@@ -76,14 +76,16 @@ bool isPowerOfTwo(int n) {
 }
 void ak(){
    int h,w,n;
-   unordered_map<int,unordered_set<int>> xv;
+   unordered_map<int,unordered_set<int>> xv; // Do not store y coords
    unordered_map<int,unordered_set<int>> yv;
    cin >>h >> w >> n;
+   vector<int> is_removed(n); // Store the indices of the trash
+   vector<bool> ax(h+1,false),ay(w+1,false); // Row or column has been previously queried
    for (int i = 0; i < n; i++){
     int xi,yi;
     cin >> xi >> yi;
-    xv[xi].insert(yi);
-    yv[yi].insert(xi);
+    xv[xi].insert(i);
+    yv[yi].insert(i);
    }
    int q;
    cin >> q;
@@ -91,24 +93,38 @@ void ak(){
     int num,a;
     cin >> a >> num;
     if (a == 1){
-        cout << xv[num].size() << endl;
-        unordered_set<int> s = xv[num];
-        for (auto& it : s){
-            int y = it;
-            yv[y].erase(num);
+        if (ax[num] == true){
+            cout << 0 << "\n";
         }
-        xv[num].clear();
+        else {
+            int ans = 0;
+            for (int e : xv[num]){
+                if (!is_removed[e]){
+                    is_removed[e] = true;
+                    ans ++;
+                }
+            }
+            ax[num] = true; // Do not forget to mark this row as visited so that u do not end up visiting it again
+            cout << ans << "\n";
+        }
     }
     else {
-        cout << yv[num].size() << endl;
-        unordered_set<int> s = yv[num];
-        for (auto& it : s){
-            int x = it;
-            xv[x].erase(num);
+        if (ay[num] == true){
+            cout << 0 << "\n";
         }
-        yv[num].clear();
-    }
+        else {
+            int ans = 0;
+            for (int e : yv[num]){
+                if (!is_removed[e]){
+                    is_removed[e] = true;
+                    ans ++;
+                }
+            }
+            cout << ans << "\n";
+            ay[num] = true;
+        }
    }
+}
 }
 int32_t main(){
     int t = 1;

@@ -77,10 +77,42 @@ bool isPowerOfTwo(int n) {
 void ak(){
     int n;
     cin >> n;
+    vector<int> arr(n);
+    for (int i = 0; i < n; i++){
+        cin >> arr[i];
+    }
+    vector<pair<char,ll>> v;
+    for (int i = 0; i < n-1; i++){
+        if (arr[i] < arr[i+1]){
+            if (v.empty() || v.back().first == '>'){
+                v.push_back({'<',1ll});
+            }
+            else {
+                v.back().second ++;
+            }
+        }
+        else {
+            if (v.empty() || v.back().first == '<'){
+                v.push_back({'>',1ll});
+            }
+            else {
+                v.back().second ++;
+            }
+        }
+    }
+
+    int sz = v.size();
+    ll ans = 0;
+    for (int i = 1; i < sz-1; i++){
+        if (v[i].first == '>'){
+            ans += (v[i-1].second)*(v[i+1].second);
+        }
+    }
+    cout << ans << "\n";
 }
 int32_t main(){
     int t = 1;
-    cin >> t;
+    //cin >> t;
     while(t--){
         ak();
     }
