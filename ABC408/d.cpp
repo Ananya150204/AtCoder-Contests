@@ -71,60 +71,40 @@ bool isPrime(ll n) {
     }
     return true;
 }
-void diwan(){
-    int h,w;
-    cin >> h >> w;
-    vector<vector<char>> grid(h,vector<char>(w));
-    queue<pair<int,int>> q;
-    vector<string> s(h);
-    for (int i = 0; i < h; i++){
-        cin >> s[i];
-    }
-    // Up, right, down, left
-    vector<int> dx = {1,0,-1,0};
-    vector<int> dy = {0,1,0,-1};
-    vector<char> dir = {'^', '<', 'v', '>'};
-    for (int i = 0; i < h; i++){
-        for (int j = 0; j < w; j++){
-            if (s[i][j] != '.')
-                grid[i][j] = s[i][j];
-            if (s[i][j] == 'E'){
-                q.push({i,j});
-            }
+bool isPowerOfTwo(int n) {
+    return n > 0 && (n & (n - 1)) == 0;
+}
+void ak(){
+    int n; string s;
+    cin >> n >> s;
+    vector<int> arr(n);
+    int cnt1 = 0;
+    for (int i = 0; i < n; i++){
+        if (s[i] == '1'){
+            arr[i] = -1;
+            cnt1 ++;
+        }
+        else {
+            arr[i] = 1;
         }
     }
-    while (!q.empty()){
-        pair<int,int> p = q.front();
-        q.pop();
+    // Min subarray sum for arr
+    int mini = INT_MAX;
+    int currSum = 0;
 
-        int x = p.first;
-        int y = p.second;
-
-        for (int i = 0; i < 4; i++){
-            int newx = x + dx[i];
-            int newy = y + dy[i];
-            if (newx >= 0 && newx < h && newy >= 0 && newy < w){
-                if (s[newx][newy] == '.'){
-                    grid[newx][newy] = dir[i];
-                    q.push({newx,newy});
-                    s[newx][newy] = dir[i]; // Forgot it; so infinite loop
-                }
-            }
+    for (int i = 0; i < n; i++){
+        currSum += arr[i];
+        mini = min(mini,currSum);
+        if (currSum > 0){
+            currSum = 0;
         }
     }
-    for (int i = 0; i < h; i++){
-        for (int j = 0; j < w; j++){
-            cout << grid[i][j];
-        }
-        cout << "\n";
-    }
-
-
+    cout << min(cnt1,cnt1+mini) << "\n";
 }
 int32_t main(){
     int t = 1;
-    //cin >> t;
+    cin >> t;
     while(t--){
-        diwan();
+        ak();
     }
 }

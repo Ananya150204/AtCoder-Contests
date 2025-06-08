@@ -1,1 +1,2 @@
 In ABC 401, Q3 u actually confused urself with example 1 which is essentially Fibonacci. It is the sum of last K elements which means a simple sliding window suffices.
+ABC 408 -- A beautiful maths application. Think about how u will represent count of ones in interval [L,R]

@@ -71,60 +71,57 @@ bool isPrime(ll n) {
     }
     return true;
 }
-void diwan(){
-    int h,w;
-    cin >> h >> w;
-    vector<vector<char>> grid(h,vector<char>(w));
-    queue<pair<int,int>> q;
-    vector<string> s(h);
-    for (int i = 0; i < h; i++){
-        cin >> s[i];
-    }
-    // Up, right, down, left
-    vector<int> dx = {1,0,-1,0};
-    vector<int> dy = {0,1,0,-1};
-    vector<char> dir = {'^', '<', 'v', '>'};
-    for (int i = 0; i < h; i++){
-        for (int j = 0; j < w; j++){
-            if (s[i][j] != '.')
-                grid[i][j] = s[i][j];
-            if (s[i][j] == 'E'){
-                q.push({i,j});
-            }
+bool isPowerOfTwo(int n) {
+    return n > 0 && (n & (n - 1)) == 0;
+}
+void ak(){
+    int n;string s;
+    cin >> n >> s;
+
+    int l = -1;
+    for (int i = 0; i <n-1; i++){
+        if (s[i] > s[i+1]){
+            l = i;
+            break;
         }
     }
-    while (!q.empty()){
-        pair<int,int> p = q.front();
-        q.pop();
+    if (l == -1){
+        cout << s << "\n";
+        return;
+    }
+    int r = n;
 
-        int x = p.first;
-        int y = p.second;
-
-        for (int i = 0; i < 4; i++){
-            int newx = x + dx[i];
-            int newy = y + dy[i];
-            if (newx >= 0 && newx < h && newy >= 0 && newy < w){
-                if (s[newx][newy] == '.'){
-                    grid[newx][newy] = dir[i];
-                    q.push({newx,newy});
-                    s[newx][newy] = dir[i]; // Forgot it; so infinite loop
-                }
-            }
+    for (int j = l+1; j < n; j++){
+        if (s[l] < s[j]){
+            r = j;
+            break;
         }
     }
-    for (int i = 0; i < h; i++){
-        for (int j = 0; j < w; j++){
-            cout << grid[i][j];
+    if (r == n){
+        for (int i = 0; i < n; i++){
+            if (i != l)
+                cout << s[i];
         }
-        cout << "\n";
+        cout << s[l] << "\n";
+        return;
     }
-
-
+    for (int i = 0; i <= l-1; i++){
+        cout << s[i];
+    }
+    //char temp = s[l];
+    for (int i = l+1; i < r; i++){
+        cout << s[i];
+    }
+    cout << s[l];
+    for (int i = r; i < n; i++){
+        cout << s[i];
+    }
+    cout << "\n";
 }
 int32_t main(){
     int t = 1;
-    //cin >> t;
+    cin >> t;
     while(t--){
-        diwan();
+        ak();
     }
 }

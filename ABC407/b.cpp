@@ -71,60 +71,94 @@ bool isPrime(ll n) {
     }
     return true;
 }
-void diwan(){
-    int h,w;
-    cin >> h >> w;
-    vector<vector<char>> grid(h,vector<char>(w));
-    queue<pair<int,int>> q;
-    vector<string> s(h);
-    for (int i = 0; i < h; i++){
-        cin >> s[i];
-    }
-    // Up, right, down, left
-    vector<int> dx = {1,0,-1,0};
-    vector<int> dy = {0,1,0,-1};
-    vector<char> dir = {'^', '<', 'v', '>'};
-    for (int i = 0; i < h; i++){
-        for (int j = 0; j < w; j++){
-            if (s[i][j] != '.')
-                grid[i][j] = s[i][j];
-            if (s[i][j] == 'E'){
-                q.push({i,j});
-            }
+bool isPowerOfTwo(int n) {
+    return n > 0 && (n & (n - 1)) == 0;
+}
+void ak(){
+    int x,y;
+    cin >> x >> y;
+    //int fx = 0;
+    //int fy = 0;
+    //int fxy = 0;
+    vector<int> fx(14);
+    vector<int> fy(7);
+    fx[0] = 36;
+    fx[1] = 36;
+    fx[2] = 36;
+    fx[3] = 35;
+    fx[4] = 33;
+    fx[5] = 30;
+    fx[6] = 26;
+    fx[7] = 21;
+    fx[8] = 15;
+    fx[9] = 10;
+    fx[10] = 6;
+    fx[11] = 3;
+    fx[12] = 1;
+    fx[13] = 0;
+
+    fy[6] = 0;
+    fy[5] = 2;
+    fy[4] = 6;
+    fy[3] = 12;
+    fy[2] = 20;
+    fy[1] = 30;
+    fy[0] = 36;
+
+    vector<vector<int>> fxy(14,vector<int>(7,0));
+    fxy[2][0] ++;
+    fxy[3][1] ++;
+    fxy[4][2]++;
+    fxy[5][3] ++;
+    fxy[6][4]++;
+    fxy[7][5]++;
+    fxy[3][1]++;
+    fxy[4][0]++;
+    fxy[5][1]++;
+    fxy[6][2]++;
+    fxy[7][3]++;
+    fxy[8][4]++;
+
+    fxy[4][2]++;
+    fxy[5][1]++;
+    fxy[6][0]++;
+    fxy[7][1]++;
+    fxy[8][2]++;
+    fxy[9][3]++;
+
+    fxy[5][3]++;
+    fxy[6][2]++;
+    fxy[7][1]++;
+    fxy[8][0]++;
+    fxy[9][1]++;
+    fxy[10][2]++;
+
+    fxy[6][4]++;
+    fxy[7][3]++;
+    fxy[8][2]++;
+    fxy[9][1]++;
+    fxy[10][0] ++;
+    fxy[11][1]++;
+
+    fxy[7][5]++;
+    fxy[8][4]++;
+    fxy[9][3]++;
+    fxy[10][2]++;
+    fxy[11][1]++;
+    fxy[12][0]++;
+
+    int num = 0;
+    for (int i = x; i <=13; i++){
+        for (int j = y; j <= 6; j++){
+            num += fxy[i][j];
         }
     }
-    while (!q.empty()){
-        pair<int,int> p = q.front();
-        q.pop();
-
-        int x = p.first;
-        int y = p.second;
-
-        for (int i = 0; i < 4; i++){
-            int newx = x + dx[i];
-            int newy = y + dy[i];
-            if (newx >= 0 && newx < h && newy >= 0 && newy < w){
-                if (s[newx][newy] == '.'){
-                    grid[newx][newy] = dir[i];
-                    q.push({newx,newy});
-                    s[newx][newy] = dir[i]; // Forgot it; so infinite loop
-                }
-            }
-        }
-    }
-    for (int i = 0; i < h; i++){
-        for (int j = 0; j < w; j++){
-            cout << grid[i][j];
-        }
-        cout << "\n";
-    }
-
-
+    std::cout << std::fixed << std::setprecision(13) << 1.0*(fx[x]+fy[y]-num)/36 << "\n";
 }
 int32_t main(){
     int t = 1;
     //cin >> t;
     while(t--){
-        diwan();
+        ak();
     }
 }
